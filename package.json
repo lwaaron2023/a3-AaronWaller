@@ -1,0 +1,17 @@
+{
+  "name": "a2-aaronwaller-a25",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Aaron Waller",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongodb": "^6.19.0",
+    "passport": "^0.7.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
