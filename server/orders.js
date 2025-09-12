@@ -1,18 +1,11 @@
 import express from "express";
-import {MongoClient, ServerApiVersion} from "mongodb";
+import {client} from "../server.js"
+
 //makes a new router to handle the orders
 export const router = express.Router();
 
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-console.log(`${process.env.USR}:${process.env.PSS}:${process.env.HST}`)
-const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+
 
 //opens a connection and gets the database
 async function connect() {
@@ -32,5 +25,10 @@ async function closeConnection(){
         console.log(error);
     }
 }
+
+
+router.get('/', async (req, res) => {
+    res.status(200).send('success');
+})
 
 
