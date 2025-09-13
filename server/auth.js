@@ -55,37 +55,31 @@ router.get('/login.js', (req, res) => {
 Decrypts and processes the submitted username and passwords, using a E2EE method: RSA-OAEP
  */
 router.post('/', (req, res) => {
+
+
+})
+/*
+Decrypts the stored information from the request
+ */
+const decryptRequest = async (req)=> {
     if(privateKey instanceof CryptoKey) {
         //checks to make sure privateKey is initialized
         try {
             // console.log("attempting to assemble data");
             // console.log(`body: ${req.body} isBuffer: ${req.body instanceof Buffer}`)
-            crypto.subtle.decrypt({"name":"RSA-OAEP"}, privateKey, req.body).then((decrypt)=>{
-                //takes decrypted bytes and converts them back to string form
-                const str = textDecoder.decode(decrypt);
-                //splits the string into the username and password components
-                const temp = str.split("/")
-                const username = temp[0]
-                const password = temp[1]
-                console.log(`username: ${username}\npassword: ${password}`);
-            })
-
+            const decrypt = await crypto.subtle.decrypt({"name":"RSA-OAEP"}, privateKey, req.body)
+            //takes decrypted bytes and converts them back to string form
+            const str = textDecoder.decode(decrypt);
+            //splits the string into the username and password components
+            const temp = str.split("/");
+            return{
+                'username': temp[0],
+                'password': temp[1],
+            }
         }catch(err){
             console.log(err);
-            res.status(500).send('Something went wrong');
+
         }
-
-    }
-    else{
-        res.status(503).send('Service Unavailable');
     }
 
-})
-
-
-
-passport.use(new Strategy(
-    (username, password, done)=>{
-        User.findOne({username: username},)
-    }
-))
+}
