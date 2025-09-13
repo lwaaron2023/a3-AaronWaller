@@ -1,5 +1,5 @@
 import {router as orderRotuer} from "./server/orders.js"
-import {router as loginRotuer} from "./server/login.js"
+import {router as loginRotuer} from "./server/auth.js"
 import {MongoClient, ServerApiVersion} from "mongodb";
 import express from "express";
 
@@ -22,12 +22,21 @@ app.use(express.static('client'));
 
 //Allows the program to automatically parse json body
 app.use(express.json())
-
+app.use(express.raw())
 //Tells the server to use the order router for order endpoint
 app.use('/order', orderRotuer);
 app.use('/auth', loginRotuer);
 app.use('/', (req, res)=>{
-    res.redirect('/auth/login')
+    try{
+        //If the person is looking for the index.html, redirect them to the login page
+        const url = req._parsedUrl.pathname;
+        console.log(url);
+        if(url === '/' || url =='/index.html'){
+            res.redirect('/auth/login');
+        }
+    } catch (error){
+        res.status(400).json(JSON.stringify({error: error}));
+    }
 })
 
 
@@ -35,6 +44,7 @@ app.use('/', (req, res)=>{
 app.listen(port, (err) => {
     if (err) console.log(err);
 })
+
 
 
 
