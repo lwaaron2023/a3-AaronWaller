@@ -65,12 +65,15 @@ const getTable = async () => {
                         "row":data[i]._id,
                     })
                     //Uses DELETE request to update table
-                    await fetch("/results", {
+                    await fetch("/order/results", {
                         method: "DELETE",
+                        headers:{
+                            "Content-Type": "application/json",
+                        },
                         body: body,
                     }).then((response)=>{
                         console.log(response)
-                        // window.location.reload()
+                        window.location.reload()
                     })
                 }
 
@@ -161,8 +164,11 @@ const update = (row, data) => {
 
             })
             //Uses PUT request to update table
-            await fetch("/results", {
+            await fetch("/order/results", {
                 method: "PUT",
+                headers:{
+                    "Content-Type": "application/json",
+                },
                 body: body,
             }).then((response) => {
                 // console.log(response)
