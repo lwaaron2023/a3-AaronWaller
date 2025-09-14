@@ -1,12 +1,11 @@
 import express from "express";
-import passport from "passport";
-import Strategy from "passport-local";
+import crypto from "crypto";
 import {client} from "../server.js"
 //makes a new router to handle the authentication
 export const router = express.Router();
 //used to put string into decryptable format
 const textDecoder = new TextDecoder();
-
+const textEncoder = new TextEncoder();
 //generates the key pairs for the use in encryption
 const generateKeyPair = async ()=> {
     return await crypto.subtle.generateKey({
@@ -54,9 +53,25 @@ router.get('/login.js', (req, res) => {
 /*
 Decrypts and processes the submitted username and passwords, using a E2EE method: RSA-OAEP
  */
-router.post('/', (req, res) => {
-
-
+router.post('/', async (req, res) => {
+    const info = await decryptRequest(req);
+    if(info){
+        //info is in database
+        console.log(`username: ${info.username}, password: ${info.password}`);
+        const user= await findUser(info.username)
+        if(user){
+            // user is in database
+            // checks to see if the password matches and hands off
+            await checkPassword(info.password, user['hashed_password']);
+        }
+        else{
+            res.text = 'Wrong Username or Password';
+            res.status(400).redirect('/auth/login');
+        }
+    }
+    else{
+        res.status(500).send('Something went wrong');
+    }
 })
 /*
 Decrypts the stored information from the request
@@ -80,6 +95,33 @@ const decryptRequest = async (req)=> {
             console.log(err);
 
         }
+    }
+}
+/*
+Attempts to retrieve user from database
+ */
+const findUser = async (username) => {
+    try {
+        const collection = await client.db("a3-AaronWaller").collection("login");
+        // console.log(collection);
+        const query = { username: `${username}` };
+        // console.log(query);
+        return await collection.findOne(query);
+    } catch (err){
+        console.log(err);
+    }
+}
+/*
+Hashes the password that was supplied and then checks it against the hashed password
+ */
+const checkPassword = async (password, compare) => {
+    try {
+        await crypto.pbkdf2(password, process.env.SALT,100000,64, 'sha256', function (err, hashedPassword) {
+            console.log(`password ${hashedPassword.toString('base64')} password ${compare} equal? ${hashedPassword.toString('base64')===compare}`);
+            (hashedPassword.toString('base64')===compare);
+        })
+    } catch(err){
+        console.log(err);
     }
 
 }
