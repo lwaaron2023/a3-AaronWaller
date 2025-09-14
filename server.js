@@ -3,7 +3,7 @@ const loginRotuer = require("./server/auth.js")
 const express = require("express");
 const MongoClient = require("mongodb").MongoClient;
 const ServerApiVersion = require("mongodb").ServerApiVersion;
-const cookieSession = require("cookie-session");
+
 const app = express();
 const port = 3000 || process.env.PORT;
 
@@ -32,21 +32,7 @@ app.use(express.json())
 app.use(express.raw())
 //Tells the server to use the order router for order endpoint
 app.use('/order', orderRotuer);
-app.use('/auth', loginRotuer);
-app.use('/', (req, res)=>{
-    try{
-        console.log(req.session.username);
-        //If the person is looking for the index.html, redirect them to the login page
-        const url = req._parsedUrl.pathname;
-        console.log(url);
-        if(url === '/' || url ==='/index.html'){
-            res.redirect('/auth/login');
-        }
-    } catch (error){
-        res.status(400).json(JSON.stringify({error: error}));
-    }
-})
-
+app.use('/', loginRotuer);
 
 //Sets up server to listen on specified port
 app.listen(port, (err) => {
