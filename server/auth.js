@@ -90,6 +90,7 @@ Sets up the passport for the steps after it receives and deciphers the data
  */
 passport.use('local', new LocalStrategy(function verify(username, password, cb) {
      findUser(username).then(user => {
+         // console.log(user)
         if (!user) { return cb(null, false, { message: 'Incorrect username or password.' }); }
         //generates an md5 hash for the password, then compares it
         const hash = crypto.createHash("md5", process.env.SALT).update(password).digest("hex");

@@ -5,26 +5,44 @@ window.onload = ()=>{
 const getTable = async () => {
     const table = document.getElementById("results")
     //sends a get request for the data stored in the server
-    const response = await fetch("/results",
+    const response = await fetch("/order/results",
         {
             method: "GET",
         })
     //extracts the data
     const data = await response.json()
+    console.log(data)
     if(data instanceof Array) {
         // console.log(data)
         if(table){
             for(let i=0;i<data.length;i++){
+                console.log(data[i])
                 //creates a new row
                 const row = table.insertRow()
                 //creates cells in row for all values returned from the server
-                row.insertCell().innerHTML = data[i].firstName
-                row.insertCell().innerHTML = data[i].lastName
-                row.insertCell().innerHTML = data[i].address
-                row.insertCell().innerHTML = data[i].shirts
-                row.insertCell().innerHTML = data[i].jackets
-                row.insertCell().innerHTML = data[i].hats
-                row.insertCell().innerHTML = data[i].totalPrice
+                let temp = row.insertCell()
+                temp.innerHTML = data[i].firstName
+                temp.className = "border border-gray-300 px-4 py-2"
+                temp = row.insertCell()
+                temp.innerHTML = data[i].lastName
+                temp.className = "border border-gray-300 px-4 py-2"
+                temp = row.insertCell()
+                temp.innerHTML = data[i].address
+                temp.className = "border border-gray-300 px-4 py-2"
+                temp = row.insertCell()
+                temp.innerHTML = data[i].shirts
+                temp.className = "border border-gray-300 px-4 py-2"
+                temp = row.insertCell()
+                temp.innerHTML = data[i].jackets
+                temp.className = "border border-gray-300 px-4 py-2"
+                temp = row.insertCell()
+                temp.innerHTML = data[i].hats
+                temp.className = "border border-gray-300 px-4 py-2"
+                temp = row.insertCell()
+                temp.innerHTML = data[i].totalPrice
+                temp.className = "border border-gray-300 px-4 py-2"
+
+
 
                 const buttonHolder = document.createElement("div");
                 buttonHolder.className = "buttonHolder";
@@ -32,7 +50,7 @@ const getTable = async () => {
                 //creates a button that allows for user to access a page that allows for deletion and modification of the row
                 const button = document.createElement("button");
                 button.innerText = "update"
-                button.id = ""+i
+                button.id = data[i]._id
                 button.onclick = () =>{
                     update(button.id, data[i])
                 }
@@ -45,7 +63,7 @@ const getTable = async () => {
                 del.onclick = async () => {
                     //creates body for http request
                     const body = JSON.stringify( {
-                        "row":i,
+                        "row":data[i]._id,
                     })
                     //Uses DELETE request to update table
                     await fetch("/results", {
@@ -157,29 +175,3 @@ const update = (row, data) => {
 
 
 
-/*
-//Experimental function
-
-const update = async (row) => {
-    console.log(row)
-    //getting two divs that make up the body
-    const main = document.getElementById("first")
-    const secondary = document.getElementById("second")
-    if(main){
-        if(secondary) {
-            // console.log("now to switch")
-            //switches which is displayed
-            const temp = main.getAttribute("style") //original style
-            main.setAttribute("style","display:none")
-            secondary.setAttribute("style","display:flex")
-            setTimeout(() => {
-                // console.log("now to switch back")
-                secondary.setAttribute("style","display:none")
-                main.setAttribute("style", temp)
-            }, 100)
-        }
-    }
-
-}
-
- */
