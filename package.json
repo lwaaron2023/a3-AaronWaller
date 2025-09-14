@@ -8,8 +8,11 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "connect-mongo": "^5.1.0",
+    "connect-sqlite3": "^0.9.16",
     "cookie-session": "^2.1.1",
     "crypto": "^1.0.1",
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "mongodb": "^6.19.0",

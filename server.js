@@ -1,13 +1,11 @@
 const orderRotuer = require("./server/orders.js")
 const loginRotuer = require("./server/auth.js")
-const express = require("express");
+const express = require('express');
+const passport = require('passport');
+const MongoStore = require('connect-mongo');
 const MongoClient = require("mongodb").MongoClient;
 const ServerApiVersion = require("mongodb").ServerApiVersion;
 
-const app = express();
-const port = 3000 || process.env.PORT;
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -16,22 +14,28 @@ const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.P
     }
 });
 
-module.exports = client;
+const session = require('express-session');
+const bodyParser = require('body-parser');
+
+
+const app = express();
+//Setting up various middleware for use later
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, store: new MongoStore({client: client}) }));
+app.use(passport.initialize());
+app.use(passport.session('session'));
+const port = 3000 || process.env.PORT;
 
 //Sets the app to be able to path from the server or client folders
 app.use(express.static('server'));
 app.use(express.static('client'));
-//Sets up session logging
-app.use(cookieSession({
-    name: 'session',
-    keys: [process.env.SESSION_SECRET],
-    maxAge: 60 * 60 * 1000
-}))
+
 //Allows the program to automatically parse json body
 app.use(express.json())
-app.use(express.raw())
+
 //Tells the server to use the order router for order endpoint
 app.use('/order', orderRotuer);
+app.use('/', loginRotuer);
 app.use('/', loginRotuer);
 
 //Sets up server to listen on specified port
