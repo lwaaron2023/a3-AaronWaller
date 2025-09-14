@@ -35,15 +35,73 @@
 
 
                 <label for="shirts">Number of Shirts:</label>
-                <input class="bg-gray-200" type="number" id="shirts" placeholder="0" value="0" min = "0" max="1000" step = "1">
+                <div id="shirts" class="flex flex-col">
+                    <div>
+                        <input type="radio" name="numShirts" value="0" id="s1" checked="checked">
+                        <label for="s1">0</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numShirts" value="1" id="s2">
+                        <label for="s2">1</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numShirts" value="2" id="s3">
+                        <label for="s3">2</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numShirts" value="-1" id="s4">
+                        <input type="number" id="s4t" min="3" max="100" step="1" value="3">
+                        <label for="j4"></label>
+                        <label for="j4t"></label>
+                    </div>
+                </div>
 
 
                 <label for="jackets">Number of Jackets:</label>
-                <input class="bg-gray-200" type="number" id="jackets" placeholder="0" value="0" min = "0" max="1000" step = "1">
+                <div id="jackets" class="flex flex-col">
+                    <div>
+                        <input type="radio" name="numJackets" value="0" id="j1" checked="checked">
+                        <label for="j1">0</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numJackets" value="1" id="j2">
+                        <label for="j2">1</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numJackets" value="2" id="j3">
+                        <label for="j3">2</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numJackets" value="-1" id="j4">
+                        <input type="number" id="j4t" min="3" max="100" step="1" value="3">
+                        <label for="j4"></label>
+                        <label for="j4t"></label>
+                    </div>
+                </div>
+<!--                <input class="bg-gray-200" type="number"  placeholder="0" value="0" min = "0" max="1000" step = "1">-->
 
 
                 <label for="hats">Number of Hats:</label>
-                <input class="bg-gray-200" type="number" id="hats" placeholder="0" value="0" min = "0" max="1000" step = "1">
+                <div id="hats" class="flex flex-col">
+                    <div>
+                        <input type="radio" name="numHats" value="0" id="h1" checked="checked">
+                        <label for="h1">0</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numHats" value="1" id="h2">
+                        <label for="h2">1</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numHats" value="2" id="h3">
+                        <label for="h3">2</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="numHats" value="-1" id="h4">
+                        <input type="number" id="h4t" min="3" max="100" step="1" value="3">
+                        <label for="h4"></label>
+                        <label for="h4t"></label>
+                    </div>
+                </div>
 
 
                 <button class="col-span-2 bg-gray-200" id="submit">submit</button>
