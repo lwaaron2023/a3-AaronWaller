@@ -22,7 +22,9 @@ router.post("/login/password", passport.authenticate("local", {
     failureRedirect: "/",
     successRedirect: "/main.html",
 }))
-
+/*
+Controls access to index.html by making sure requester has session
+ */
 router.get("/main.html",(req,res,next)=>{
     console.log(`user ${req.user}`);
     if(!req.user) {
@@ -43,12 +45,33 @@ router.get("/",(req,res,next)=>{
         console.log(err);
     });
 })
-
 /*
 Sets the get for the index.html to point to the login screen
  */
 router.get("/index.html",(req,res,next)=>{
     res.sendFile("/login.html", {root:"./public"}, (err)=>{
+        console.log(err);
+    });
+})
+/*
+Controls access to order.html by making sure requester has session
+ */
+router.get("/order.html",(req,res,next)=>{
+    console.log(`user ${req.user}`);
+    if(!req.user) {
+        res.redirect("/index.html");
+    }
+    else{
+        res.sendFile("/order.html", {root: "./public"}, (err) => {
+            console.log(err);
+        });
+    }
+})
+/*
+Allows user to get the order.js file
+ */
+router.get("/order.js",(req,res,next)=>{
+    res.sendFile("/js/order.js", {root:"./public"}, (err)=>{
         console.log(err);
     });
 })
