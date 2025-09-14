@@ -42,15 +42,14 @@ const getTable = async () => {
                 temp.innerHTML = data[i].totalPrice
                 temp.className = "border border-gray-300 px-4 py-2"
 
-
-
                 const buttonHolder = document.createElement("div");
-                buttonHolder.className = "buttonHolder";
+                buttonHolder.className = "flex items-center justify-center";
 
                 //creates a button that allows for user to access a page that allows for deletion and modification of the row
                 const button = document.createElement("button");
                 button.innerText = "update"
                 button.id = data[i]._id
+                button.className = "mr-2 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200"
                 button.onclick = () =>{
                     update(button.id, data[i])
                 }
@@ -59,7 +58,7 @@ const getTable = async () => {
                 //gives the delete button its functionality which is to have the server delete the row, and then reload the page
                 const del = document.createElement("button");
                 del.innerText = "delete"
-                del.className = "delete"
+                del.className = "mr-2 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200"
                 del.onclick = async () => {
                     //creates body for http request
                     const body = JSON.stringify( {
@@ -70,15 +69,17 @@ const getTable = async () => {
                         method: "DELETE",
                         body: body,
                     }).then((response)=>{
-                        // console.log(response)
-                        window.location.reload()
+                        console.log(response)
+                        // window.location.reload()
                     })
                 }
 
                 buttonHolder.appendChild(button)
                 buttonHolder.appendChild(del)
 
-                row.insertCell().appendChild(buttonHolder)
+                temp = row.insertCell()
+                temp.appendChild(buttonHolder)
+                temp.className = "border border-gray-300 px-4 py-2"
             }
         }
     }
@@ -108,13 +109,12 @@ const update = (row, data) => {
         // console.log(data)
 
         //makes the switch onscreen
-        const temp = main.getAttribute("style") //original style
-        main.setAttribute("style","display:none")
-        secondary.setAttribute("style","display:flex")
+        main.className="hidden"
+        secondary.className=""
         //gives the discard button its functionality, which is to return and discard any changes
         discard.onclick = () =>{
-            secondary.setAttribute("style","display:none")
-            main.setAttribute("style", temp)
+            main.className=""
+            secondary.className="hidden"
         }
         //sets the fields to their intial values
         /*
