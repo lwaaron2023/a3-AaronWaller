@@ -56,6 +56,7 @@ router.get("/index.html",(req,res,next)=>{
 Allows users to sign out
  */
 router.post("/logout", (req,res,next)=>{
+    console.log("user logged out");
     req.logout(function(err){
         if(err) return next(err);
         res.redirect("/");

@@ -3,54 +3,54 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <nav>
-        <h1>Gompei's Gear</h1>
-        <div>
-            <p>Home</p>
-            <p><a href="order.html">Orders</a></p>
-        </div>
-    </nav>
-    <div class = "main">
-        <form id="merchform">
-            <h2>Merch Form</h2>
-            <div class = "vertical">
-                <div class = "horizontal">
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" placeholder="Please Enter First Name" value="">
-                </div>
-                <div class = "horizontal">
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" placeholder="Please Enter Last Name" value="">
-                </div>
-                <div class = "horizontal">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" placeholder="Please Enter Address" value="">
-                </div>
-                <div class = "horizontal">
-                    <label for="shirts">Number of Shirts:</label>
-                    <input type="number" id="shirts" placeholder="0" value="0" min = "0" max="1000" step = "1">
-                </div>
-                <div class = "horizontal">
-                    <label for="jackets">Number of Jackets:</label>
-                    <input type="number" id="jackets" placeholder="0" value="0" min = "0" max="1000" step = "1">
-                </div>
-                <div class = "horizontal">
-                    <label for="hats">Number of Hats:</label>
-                    <input type="number" id="hats" placeholder="0" value="0" min = "0" max="1000" step = "1">
-                </div>
+    <div class="container mx-auto flex flex-col justify-center items-center min-h-screen bg-red-100">
+        <nav class="grid grid-cols-1 gap-4">
+            <h1 class="font-bold justify-self-center text-6xl">Gompei's Gear</h1>
+            <div class="grid grid-cols-3 mr-4">
+                <p class="mr-2 border-solid border-4 rounded-full p-2 text-center">Home</p>
+                <a class="ml-2 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200" href="order.html">Orders</a>
+                <form class="justify-self-center" action="/logout" method="post">
+                    <button class="pl-7 pr-7 ml-2 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200" type="submit">Log Out</button>
+                </form>
             </div>
-            <button>submit</button>
-        </form>
-        <p id="response message"></p>
-    </div>
+        </nav>
+        <div class = "container mx-auto flex flex-col justify-center items-center mt-5">
+            <form action="/order/place" method="post" class="grid grid-cols-2 gap-4 border-solid border-4 p-4">
+                <h2 class="col-span-2 justify-self-center font-bold text-4xl">Merch Form</h2>
 
+                <label for="firstName">First Name:</label>
+                <input class="bg-gray-200" type="text" id="firstName" placeholder="Please Enter First Name" value="">
+
+                <label for="lastName">Last Name:</label>
+                <input class="bg-gray-200" type="text" id="lastName" placeholder="Please Enter Last Name" value="">
+
+                <label for="address">Address:</label>
+                <input class="bg-gray-200" type="text" id="address" placeholder="Please Enter Address" value="">
+
+
+                <label for="shirts">Number of Shirts:</label>
+                <input class="bg-gray-200" type="number" id="shirts" placeholder="0" value="0" min = "0" max="1000" step = "1">
+
+
+                <label for="jackets">Number of Jackets:</label>
+                <input class="bg-gray-200" type="number" id="jackets" placeholder="0" value="0" min = "0" max="1000" step = "1">
+
+
+                <label for="hats">Number of Hats:</label>
+                <input class="bg-gray-200" type="number" id="hats" placeholder="0" value="0" min = "0" max="1000" step = "1">
+
+
+                <button class="col-span-2 bg-gray-200">submit</button>
+            </form>
+            <p id="response message"></p>
+        </div>
+    </div>
 
   </body>
 </html>
