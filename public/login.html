@@ -5,20 +5,23 @@
     <title>Login</title>
     <link href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"
           rel="stylesheet">
-    <script type="module" src="login.js"></script>
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
-    <h1>You Must Log In to Continue</h1>
-    <form>
-        <section>
-            <label for="username">Username</label>
+    <div class = "container mx-auto flex flex-col justify-center items-center min-h-screen bg-red-100">
+        <form action="/login/password" method="post" class="grid grid-cols-2 gap-4">
+            <h1 class="text-xl font-bold col-span-2 justify-self-center">You Must Log in to Continue</h1>
+
+            <label for="username" class="m-4">Username</label>
             <input type="text" id="username" name="username" placeholder="Username" required>
-        </section>
-        <section>
-            <label for="password">Password</label>
+
+            <label for="password" class="m-4">Password</label>
             <input type="password" id="password" name="password" placeholder="Password" required>
-        </section>
-        <button type="submit" onclick="onSubmit()" id="submit">Log In</button>
-    </form>
+
+            <button class="item-center col-span-2 bg-gray-200" type="submit" onclick="onSubmit()" id="submit">Log In</button>
+        </form>
+    </div>
+
 </body>
 </html>

@@ -1,91 +1,141 @@
-import express from "express";
-import passport from "passport";
-import Strategy from "passport-local";
-import {client} from "../server.js"
-//makes a new router to handle the authentication
-export const router = express.Router();
-//used to put string into decryptable format
-const textDecoder = new TextDecoder();
+const express = require("express");
+const crypto = require("crypto");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const MongoClient = require("mongodb").MongoClient;
+const ServerApiVersion = require("mongodb").ServerApiVersion;
 
-//generates the key pairs for the use in encryption
-const generateKeyPair = async ()=> {
-    return await crypto.subtle.generateKey({
-        name: "RSA-OAEP",
-        modulusLength: 4096,
-        publicExponent: new Uint8Array([1, 0, 1]),
-        hash: {name: "SHA-256"}
-    }, true, ["encrypt", "decrypt"])
-}
-let publicKey;
-let privateKey;
-//generates the key pairs for the use in encryption
-generateKeyPair().then((pair)=>{
-     privateKey = pair.privateKey;
-     publicKey = pair.publicKey;
-})
+const router = express.Router();
+module.exports = router;
 
-//Sends the requester the public key for the encryption
-router.get('/publicKey', (req, res) => {
-    if(publicKey instanceof CryptoKey) {
-        crypto.subtle.exportKey("jwk", publicKey).then((publicKey)=>{
-            res.json(publicKey);
-        })
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+
+
+router.post("/login/password", passport.authenticate("local", {
+    failureRedirect: "/",
+    successRedirect: "/main.html",
+}))
+/*
+Controls access to index.html by making sure requester has session
+ */
+router.get("/main.html",(req,res,next)=>{
+    // console.log(`user ${req.user}`);
+    if(!req.user) {
+        res.redirect("/index.html");
     }
     else{
-        res.status(404).send('Not found');
-    }
-})
-/*
-Sends the login page to the client
- */
-router.get('/login', (req, res) => {
-    res.sendFile('/login.html', {root: "./public"}, (err)=>{
-        if(err) console.log(err);
-    })
-})
-/*
-Sends the login.js file to the client
- */
-router.get('/login.js', (req, res) => {
-    res.sendFile('/login.js', {root: "./public"}, (err)=>{
-        if(err) console.log(err);
-    })
-})
-/*
-Decrypts and processes the submitted username and passwords, using a E2EE method: RSA-OAEP
- */
-router.post('/', (req, res) => {
-    if(privateKey instanceof CryptoKey) {
-        //checks to make sure privateKey is initialized
-        try {
-            // console.log("attempting to assemble data");
-            // console.log(`body: ${req.body} isBuffer: ${req.body instanceof Buffer}`)
-            crypto.subtle.decrypt({"name":"RSA-OAEP"}, privateKey, req.body).then((decrypt)=>{
-                //takes decrypted bytes and converts them back to string form
-                const str = textDecoder.decode(decrypt);
-                //splits the string into the username and password components
-                const temp = str.split("/")
-                const username = temp[0]
-                const password = temp[1]
-                console.log(`username: ${username}\npassword: ${password}`);
-            })
-
-        }catch(err){
+        res.sendFile("/main.html", {root: "./public"}, (err) => {
             console.log(err);
-            res.status(500).send('Something went wrong');
-        }
-
+        });
     }
-    else{
-        res.status(503).send('Service Unavailable');
-    }
-
 })
 
-
-
-passport.use(new Strategy(
-    (username, password, done)=>{
-        User.findOne({username: username},)
+/*
+Sets the get for the index.html to point to the login screen
+ */
+router.get("/",(req,res,next)=>{
+    res.sendFile("/login.html", {root:"./public"}, (err)=>{
+        console.log(err);
+    });
+})
+/*
+Sets the get for the index.html to point to the login screen
+ */
+router.get("/index.html",(req,res,next)=>{
+    res.sendFile("/login.html", {root:"./public"}, (err)=>{
+        console.log(err);
+    });
+})
+/*
+Controls access to order.html by making sure requester has session
+ */
+router.get("/order.html",(req,res,next)=>{
+    // console.log(`user ${req.user}`);
+    if(!req.user) {
+        res.redirect("/index.html");
     }
-))
+    else{
+        res.sendFile("/order.html", {root: "./public"}, (err) => {
+            console.log(err);
+        });
+    }
+})
+/*
+Allows user to get the order.js file
+ */
+router.get("/order.js",(req,res,next)=>{
+    res.sendFile("/js/order.js", {root:"./public"}, (err)=>{
+        console.log(err);
+    });
+})
+/*
+Allows user to get the main.js file
+ */
+router.get("/main.js",(req,res,next)=>{
+    res.sendFile("/js/main.js", {root:"./public"}, (err)=>{
+        console.log(err);
+    });
+})
+/*
+Allows users to sign out
+ */
+router.post("/logout", (req,res,next)=>{
+    console.log("user logged out");
+    req.logout(function(err){
+        if(err) return next(err);
+        res.redirect("/");
+    });
+})
+/*
+Sets up the passport for the steps after it receives and deciphers the data
+ */
+passport.use('local', new LocalStrategy(function verify(username, password, cb) {
+     findUser(username).then(user => {
+         // console.log(user)
+        if (!user) { return cb(null, false, { message: 'Incorrect username or password.' }); }
+        //generates an md5 hash for the password, then compares it
+        const hash = crypto.createHash("md5", process.env.SALT).update(password).digest("hex");
+        if(user.hashed_password !== hash) {
+            // console.log(`Incorrect password. Expected:${user.hashed_password} with type ${typeof user.hashed_password} but received:${hash} with type ${typeof hash}`);
+            return cb(null, false, { message: 'Incorrect username or password.' });
+        }
+        return cb(null, user);
+    });
+}))
+/*
+Attempts to retrieve user from database
+ */
+const findUser = async (username) => {
+    try {
+        const collection = await client.db("a3-AaronWaller").collection("login");
+        // console.log(collection);
+        const query = { username: `${username}` };
+        // console.log(query);
+        return await collection.findOne(query);
+    } catch (err){
+        console.log(err);
+    }
+}
+/*
+Used for storing user information for persistent logins
+ */
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+        cb(null, { id: user.id, username: user.username });
+    });
+});
+/*
+Used for deleting user information when they would log out
+ */
+passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+        return cb(null, user);
+    });
+});

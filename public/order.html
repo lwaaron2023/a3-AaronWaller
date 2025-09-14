@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="/order.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css">
+
+
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+
+    <div class="container mx-auto flex flex-col justify-center items-center min-h-screen bg-red-100">
+        <nav class="grid grid-cols-1 gap-4">
+            <h1 class="font-bold justify-self-center text-6xl">Current Orders</h1>
+            <div class="grid grid-cols-3 mr-4">
+                <a class="mr-2 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200" href="/main.html">Home</a>
+                <p class="ml-2 border-solid border-4 rounded-full p-2 text-center">Orders</p>
+                <form class="justify-self-center" action="/logout" method="post">
+                    <button class="pl-7 pr-7 ml-2 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200" type="submit">Log Out</button>
+                </form>
+            </div>
+        </nav>
+        <div  id = "first">
+            <div class = "overflow-x-auto">
+                <table class="table-auto table-fixed border border-gray-300 mt-5" id="results" >
+                    <caption class="border border-gray-300 px-4 py-2"><strong>Current Orders in the System</strong></caption>
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2">First Name</th>
+                        <th class="border border-gray-300 px-4 py-2">Last Name</th>
+                        <th class="border border-gray-300 px-4 py-2">Address</th>
+                        <th class="border border-gray-300 px-4 py-2">Number of Shirts</th>
+                        <th class="border border-gray-300 px-4 py-2">Number of Jackets</th>
+                        <th class="border border-gray-300 px-4 py-2">Number of Hats</th>
+                        <th class="border border-gray-300 px-4 py-2">Total Price</th>
+                        <th class="border border-gray-300 px-4 py-2">Actions</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="hidden" id = "second">
+            <div class="grid grid-cols-6 gap-4 mt-5">
+                <label for="firstName">First Name:</label>
+                <label for="lastName">Last Name:</label>
+                <label for="address">Address:</label>
+                <label for="shirts">Number of Shirts:</label>
+                <label for="jackets">Number of Jackets:</label>
+                <label for="hats">Number of Hats:</label>
+                <input type="text" id="firstName" value="">
+                <input type="text" id="lastName" value="">
+                <input type="text" id="address" value="">
+                <input type="number" id="shirts" value="0" min = "0" max="1000" step = "1">
+                <input type="number" id="jackets" value="0" min = "0" max="1000" step = "1">
+                <input type="number" id="hats" value="0" min = "0" max="1000" step = "1">
+                <button class="mt-4 col-span-3 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200" id = "save">Save Changes To Order</button>
+                <button class="mt-4 col-span-3 border-solid border-4 rounded-full p-2 text-center hover:bg-gray-200" id= "discard">Discard Changes To Order</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
