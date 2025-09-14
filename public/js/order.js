@@ -2,6 +2,7 @@ window.onload = ()=>{
     getTable().then()
 }
 
+
 const getTable = async () => {
     const table = document.getElementById("results")
     //sends a get request for the data stored in the server

@@ -26,12 +26,12 @@ router.post("/login/password", passport.authenticate("local", {
 Controls access to index.html by making sure requester has session
  */
 router.get("/main.html",(req,res,next)=>{
-    console.log(`user ${req.user}`);
+    // console.log(`user ${req.user}`);
     if(!req.user) {
         res.redirect("/index.html");
     }
     else{
-        res.sendFile("/index.html", {root: "./public"}, (err) => {
+        res.sendFile("/main.html", {root: "./public"}, (err) => {
             console.log(err);
         });
     }
@@ -57,7 +57,7 @@ router.get("/index.html",(req,res,next)=>{
 Controls access to order.html by making sure requester has session
  */
 router.get("/order.html",(req,res,next)=>{
-    console.log(`user ${req.user}`);
+    // console.log(`user ${req.user}`);
     if(!req.user) {
         res.redirect("/index.html");
     }
@@ -72,6 +72,14 @@ Allows user to get the order.js file
  */
 router.get("/order.js",(req,res,next)=>{
     res.sendFile("/js/order.js", {root:"./public"}, (err)=>{
+        console.log(err);
+    });
+})
+/*
+Allows user to get the main.js file
+ */
+router.get("/main.js",(req,res,next)=>{
+    res.sendFile("/js/main.js", {root:"./public"}, (err)=>{
         console.log(err);
     });
 })

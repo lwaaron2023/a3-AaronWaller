@@ -4,7 +4,7 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css">
-    
+    <script src="/main.js"></script>
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
@@ -21,7 +21,7 @@
             </div>
         </nav>
         <div class = "container mx-auto flex flex-col justify-center items-center mt-5">
-            <form action="/order/place" method="post" class="grid grid-cols-2 gap-4 border-solid border-4 p-4">
+            <form class="grid grid-cols-2 gap-4 border-solid border-4 p-4">
                 <h2 class="col-span-2 justify-self-center font-bold text-4xl">Merch Form</h2>
 
                 <label for="firstName">First Name:</label>
@@ -46,7 +46,7 @@
                 <input class="bg-gray-200" type="number" id="hats" placeholder="0" value="0" min = "0" max="1000" step = "1">
 
 
-                <button class="col-span-2 bg-gray-200">submit</button>
+                <button class="col-span-2 bg-gray-200" id="submit">submit</button>
             </form>
             <p id="response message"></p>
         </div>

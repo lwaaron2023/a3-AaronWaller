@@ -1,5 +1,4 @@
 const express = require("express");
-const crypto = require("crypto");
 const {ObjectId} = require("mongodb");
 const MongoClient = require("mongodb").MongoClient;
 const ServerApiVersion = require("mongodb").ServerApiVersion;
@@ -17,7 +16,7 @@ const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.P
 Allows for the client to request the orders pertaining to the current user
  */
 router.get('/results', async (req, res) => {
-    console.log(req.user)
+    // console.log(req.user)
     if(req.user){
         //gets orders pertaining to user
         findUser(req.user.username).then(user => {
@@ -37,10 +36,13 @@ Allows client to delete a specified order
  */
 router.delete('/results', async (req, res) => {
     try{
-        const row = req.body.row;
         // console.log(row);
-        await deleteDocument(row);
-        res.status(200).send();
+        if(await deleteDocument(req.body.row)){
+            res.status(200).send();
+        }
+        else{
+            res.status(404).send("Document not found");
+        }
     }catch(err){
         res.status(500).send(err)
     }
@@ -51,10 +53,8 @@ Allows a client to modify a specified order
  */
 router.put('/results', async (req, res) => {
     try{
-        const row = req.body.row;
-        const data = req.body.data;
-        console.log(row,data);
-        if(await modifyDocument(row,data)){
+        // console.log(row,data);
+        if(await modifyDocument(req.body.row,req.body.data)){
             res.status(200).send();
         }
         else{
@@ -64,7 +64,18 @@ router.put('/results', async (req, res) => {
         res.status(500).send(err)
     }
 })
-
+/*
+Allows a client to place an order
+ */
+router.post('/place', async (req, res) => {
+    try{
+        await addDocument(req.user.username,req.body);
+        res.redirect("/main.html");
+    }catch(err){
+        console.log(err);
+        res.redirect(500, "/main.html")
+    }
+})
 //Finds a specified user in the database
 const findUser = async (username) => {
     try {
@@ -95,5 +106,26 @@ const deleteDocument = async (id)=>{
 }
 //Finds a specified document and modifies it to store the new data
 const modifyDocument = async (id,data)=>{
+
+}
+//Adds the document to the database
+const addDocument = async (user, data)=>{
+    const record = {
+        username: user,
+        firstName: data['firstName'],
+        lastName: data['lastName'],
+        address: data['address'],
+        shirts: data['shirts'],
+        jackets: data['jackets'],
+        hats: data['hats'],
+        totalPrice: data['shirts'] * 15 + data['jackets'] * 35 + data['hats'] * 5
+    }
+    console.log(record);
+    try{
+        const collection = client.db("a3-AaronWaller").collection("orders");
+        await collection.insertOne(record);
+    } catch(err){
+        console.log(err);
+    }
 
 }

@@ -36,7 +36,6 @@ app.use(express.json())
 //Tells the server to use the order router for order endpoint
 app.use('/order', orderRotuer);
 app.use('/', loginRotuer);
-app.use('/', loginRotuer);
 
 //Sets up server to listen on specified port
 app.listen(port, (err) => {
