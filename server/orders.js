@@ -54,7 +54,7 @@ Allows a client to modify a specified order
 router.put('/results', async (req, res) => {
     try{
         // console.log(row,data);
-        if(await modifyDocument(req.body.row,req.body.data)){
+        if(await modifyDocument(req.body.row,req.user.username,req.body.data)){
             res.status(200).send();
         }
         else{
@@ -105,8 +105,26 @@ const deleteDocument = async (id)=>{
     }
 }
 //Finds a specified document and modifies it to store the new data
-const modifyDocument = async (id,data)=>{
-
+const modifyDocument = async (id,user,data)=>{
+    const update = {
+        $set: {
+            username: user,
+            firstName: data['firstName'],
+            lastName: data['lastName'],
+            address: data['address'],
+            shirts: data['shirts'],
+            jackets: data['jackets'],
+            hats: data['hats'],
+            totalPrice: data['shirts'] * 15 + data['jackets'] * 35 + data['hats'] * 5
+        }
+    }
+    const query = { _id: new ObjectId(id) };
+    try{
+        const collection = client.db("a3-AaronWaller").collection("orders");
+        await collection.updateOne(query,update,{});
+    } catch(err){
+        console.log(err);
+    }
 }
 //Adds the document to the database
 const addDocument = async (user, data)=>{
