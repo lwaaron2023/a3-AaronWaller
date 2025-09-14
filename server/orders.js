@@ -1,8 +1,11 @@
-import express from "express";
-import {client} from "../server.js"
-
+const express = require("express");
+const crypto = require("crypto");
+const client = require("../server.js");
+//makes a new router to handle the authentication
+const router = express.Router();
+module.exports = router;
 //makes a new router to handle the orders
-export const router = express.Router();
+
 
 
 

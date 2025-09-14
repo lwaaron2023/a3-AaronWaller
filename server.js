@@ -1,13 +1,14 @@
-import {router as orderRotuer} from "./server/orders.js"
-import {router as loginRotuer} from "./server/auth.js"
-import {MongoClient, ServerApiVersion} from "mongodb";
-import express from "express";
-
+const orderRotuer = require("./server/orders.js")
+const loginRotuer = require("./server/auth.js")
+const express = require("express");
+const MongoClient = require("mongodb").MongoClient;
+const ServerApiVersion = require("mongodb").ServerApiVersion;
+const cookieSession = require("cookie-session");
 const app = express();
 const port = 3000 || process.env.PORT;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-export const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
+const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,
@@ -15,11 +16,17 @@ export const client = new MongoClient(`mongodb+srv://${process.env.USR}:${proces
     }
 });
 
+module.exports = client;
+
 //Sets the app to be able to path from the server or client folders
 app.use(express.static('server'));
 app.use(express.static('client'));
-
-
+//Sets up session logging
+app.use(cookieSession({
+    name: 'session',
+    keys: [process.env.SESSION_SECRET],
+    maxAge: 60 * 60 * 1000
+}))
 //Allows the program to automatically parse json body
 app.use(express.json())
 app.use(express.raw())
@@ -28,10 +35,11 @@ app.use('/order', orderRotuer);
 app.use('/auth', loginRotuer);
 app.use('/', (req, res)=>{
     try{
+        console.log(req.session.username);
         //If the person is looking for the index.html, redirect them to the login page
         const url = req._parsedUrl.pathname;
         console.log(url);
-        if(url === '/' || url =='/index.html'){
+        if(url === '/' || url ==='/index.html'){
             res.redirect('/auth/login');
         }
     } catch (error){

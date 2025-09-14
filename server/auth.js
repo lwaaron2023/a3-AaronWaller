@@ -1,11 +1,11 @@
-import express from "express";
-import crypto from "crypto";
-import {client} from "../server.js"
+const express = require("express");
+const crypto = require("crypto");
+const client = require("../server.js");
 //makes a new router to handle the authentication
-export const router = express.Router();
+const router = express.Router();
+module.exports = router;
 //used to put string into decryptable format
 const textDecoder = new TextDecoder();
-const textEncoder = new TextEncoder();
 //generates the key pairs for the use in encryption
 const generateKeyPair = async ()=> {
     return await crypto.subtle.generateKey({
@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
         if(user){
             // user is in database
             // checks to see if the password matches and hands off
-            await checkPassword(info.password, user['hashed_password']);
+            await checkPassword(info.password, user['hashed_password'], req, res, info.username);
         }
         else{
             res.text = 'Wrong Username or Password';
@@ -113,12 +113,15 @@ const findUser = async (username) => {
 }
 /*
 Hashes the password that was supplied and then checks it against the hashed password
+If it is a match it will hand off the control to the authentication functionality
  */
-const checkPassword = async (password, compare) => {
+const checkPassword = async (password, compare, req, res, username) => {
     try {
         await crypto.pbkdf2(password, process.env.SALT,100000,64, 'sha256', function (err, hashedPassword) {
             console.log(`password ${hashedPassword.toString('base64')} password ${compare} equal? ${hashedPassword.toString('base64')===compare}`);
-            (hashedPassword.toString('base64')===compare);
+            if(hashedPassword.toString('base64')===compare){
+                setSession(req,res, username);
+            }
         })
     } catch(err){
         console.log(err);
