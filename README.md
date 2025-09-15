@@ -50,6 +50,8 @@ Do the following to complete this assignment:
 6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
 
 Acheivements
+
+
 ---
 
 Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, why it was challenging, and how many points you think the achievement should be worth. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
@@ -118,7 +120,7 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 
 ## Your Web Application Title
 
-Your Render (or alternative server) link e.g. http://a3-joshua-cuneo.render.me
+https://a3-aaron-waller-git-main-aarons-projects-75ced36d.vercel.app/
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
@@ -130,7 +132,9 @@ Include a very brief summary of your project here. Images are encouraged, along 
 - a list of Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function, please add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 1**: I used OAuth authentication via the local strategy
+- **Tech Achievement 2**: I deployed to vercel instead of render
+- 
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...

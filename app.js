@@ -30,9 +30,28 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(passport.initialize());
 app.use(passport.session('session'));
 
-//Sets the app to be able to path from the public
-app.use(express.static(path.join(__dirname, 'public/images')));
-app.use(express.static(path.join(__dirname, 'public/javascripts')));
+//Sets the app to be able to get css files
+app.get('/public/stylesheets/:filename', (req, res) => {
+    const filename = req.params['filename'];
+    res.sendFile(filename, {root: './public/stylesheets/', contentType: 'text/css'}, (err)=>{
+        if(err){
+            console.log(err);
+            res.status(404).send('Not Found');
+        }
+    });
+})
+//Sets the app to be able to get javascript files
+app.all('/public/javascripts/:filename', (req, res) => {
+    // console.log(req.params['filename'])
+    const filename = req.params['filename'];
+    res.sendFile(filename, {root: './public/javascripts/', contentType: 'application/javascript'}, (err)=>{
+        if(err){
+            console.log(err);
+            res.status(404).send('Not Found');
+        }
+    });
+})
+
 //Allows the program to automatically parse json body
 app.use(express.json())
 
