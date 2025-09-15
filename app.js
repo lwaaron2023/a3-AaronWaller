@@ -1,5 +1,5 @@
-const orderRotuer = require("./server/orders.js")
-const loginRotuer = require("./server/auth.js")
+const orderRotuer = require("./routes/orders.js")
+const loginRotuer = require("./routes/auth.js")
 const express = require('express');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
@@ -14,17 +14,20 @@ const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.P
     }
 });
 
+
+
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
 
 const app = express();
+app.set('view engine', 'pug');
+app.set('views', './views');
 //Setting up various middleware for use later
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, store: new MongoStore({client: client}) }));
 app.use(passport.initialize());
 app.use(passport.session('session'));
-const port = 3000 || process.env.PORT;
 
 //Sets the app to be able to path from the server or client folders
 app.use(express.static('server'));
@@ -37,11 +40,9 @@ app.use(express.json())
 app.use('/order', orderRotuer);
 app.use('/', loginRotuer);
 
-//Sets up server to listen on specified port
-app.listen(port, (err) => {
-    if (err) console.log(err);
-})
 
+
+module.exports = {app};
 
 
 

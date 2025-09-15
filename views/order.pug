@@ -1,0 +1,46 @@
+doctype html
+head
+    title CS4241 Assignment 2
+    meta(charset='utf-8')
+    script(src='/order.js')
+    link(rel='stylesheet' href='https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css')
+    // get rid of favicon error
+    link(rel='icon' href='data:;base64,iVBORw0KGgo=')
+.container.mx-auto.flex.flex-col.justify-center.items-center.min-h-screen.bg-red-100
+    nav.grid.grid-cols-1.gap-4
+        h1.font-bold.justify-self-center.text-6xl Current Orders
+        .grid.grid-cols-3.mr-4
+            a.mr-2.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200' href='/main.html') Home
+            p.ml-2.border-solid.border-4.rounded-full.p-2.text-center Orders
+            form.justify-self-center(action='/logout' method='post')
+                button.pl-7.pr-7.ml-2.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200' type='submit') Log Out
+    #first
+        .overflow-x-auto
+            table#results.table-auto.table-fixed.border.border-gray-300.mt-5
+                caption.border.border-gray-300.px-4.py-2
+                    strong Current Orders in the System
+                tr
+                    th.border.border-gray-300.px-4.py-2 First Name
+                    th.border.border-gray-300.px-4.py-2 Last Name
+                    th.border.border-gray-300.px-4.py-2 Address
+                    th.border.border-gray-300.px-4.py-2 Number of Shirts
+                    th.border.border-gray-300.px-4.py-2 Number of Jackets
+                    th.border.border-gray-300.px-4.py-2 Number of Hats
+                    th.border.border-gray-300.px-4.py-2 Total Price
+                    th.border.border-gray-300.px-4.py-2 Actions
+    #second.hidden
+        .grid.grid-cols-6.gap-4.mt-5
+            label(for='firstName') First Name:
+            label(for='lastName') Last Name:
+            label(for='address') Address:
+            label(for='shirts') Number of Shirts:
+            label(for='jackets') Number of Jackets:
+            label(for='hats') Number of Hats:
+            input#firstName(type='text' value='')
+            input#lastName(type='text' value='')
+            input#address(type='text' value='')
+            input#shirts(type='number' value='0' min='0' max='1000' step='1')
+            input#jackets(type='number' value='0' min='0' max='1000' step='1')
+            input#hats(type='number' value='0' min='0' max='1000' step='1')
+            button#save.mt-4.col-span-3.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200') Save Changes To Order
+            button#discard.mt-4.col-span-3.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200') Discard Changes To Order

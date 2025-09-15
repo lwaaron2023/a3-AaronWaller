@@ -28,12 +28,10 @@ Controls access to index.html by making sure requester has session
 router.get("/main.html",(req,res,next)=>{
     // console.log(`user ${req.user}`);
     if(!req.user) {
-        res.redirect("/index.html");
+        res.render("auth.pug", {title:'Login'});
     }
     else{
-        res.sendFile("/main.html", {root: "./public"}, (err) => {
-            console.log(err);
-        });
+        res.render("main.pug", {title:'Gompei Gear'})
     }
 })
 
@@ -41,17 +39,13 @@ router.get("/main.html",(req,res,next)=>{
 Sets the get for the index.html to point to the login screen
  */
 router.get("/",(req,res,next)=>{
-    res.sendFile("/login.html", {root:"./public"}, (err)=>{
-        console.log(err);
-    });
+    res.render("auth.pug", {title:'Login'})
 })
 /*
 Sets the get for the index.html to point to the login screen
  */
 router.get("/index.html",(req,res,next)=>{
-    res.sendFile("/login.html", {root:"./public"}, (err)=>{
-        console.log(err);
-    });
+    res.render("auth.pug", {title:'Login'})
 })
 /*
 Controls access to order.html by making sure requester has session
@@ -59,19 +53,17 @@ Controls access to order.html by making sure requester has session
 router.get("/order.html",(req,res,next)=>{
     // console.log(`user ${req.user}`);
     if(!req.user) {
-        res.redirect("/index.html");
+        res.render("auth.pug", {title:'Login'});
     }
     else{
-        res.sendFile("/order.html", {root: "./public"}, (err) => {
-            console.log(err);
-        });
+        res.render("order.pug", {title:'Orders'});
     }
 })
 /*
 Allows user to get the order.js file
  */
 router.get("/order.js",(req,res,next)=>{
-    res.sendFile("/js/order.js", {root:"./public"}, (err)=>{
+    res.sendFile("/javascripts/order.js", {root:"./public"}, (err)=>{
         console.log(err);
     });
 })
@@ -79,7 +71,7 @@ router.get("/order.js",(req,res,next)=>{
 Allows user to get the main.js file
  */
 router.get("/main.js",(req,res,next)=>{
-    res.sendFile("/js/main.js", {root:"./public"}, (err)=>{
+    res.sendFile("/javascripts/main.js", {root:"./public"}, (err)=>{
         console.log(err);
     });
 })
