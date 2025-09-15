@@ -30,10 +30,10 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(passport.initialize());
 app.use(passport.session('session'));
 
-//Sets the app to be able to path from the server or client folders
-app.use(express.static('server'));
-app.use(express.static('client'));
-
+//Sets the app to be able to path from the public
+app.use(express.static('public/images/'));
+app.use(express.static('public/javascripts/'));
+app.use(express.static('public/stylesheets/'));
 //Allows the program to automatically parse json body
 app.use(express.json())
 

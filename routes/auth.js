@@ -60,22 +60,6 @@ router.get("/order.html",(req,res,next)=>{
     }
 })
 /*
-Allows user to get the order.js file
- */
-router.get("/order.js",(req,res,next)=>{
-    res.sendFile("/javascripts/order.js", {root:"./public"}, (err)=>{
-        console.log(err);
-    });
-})
-/*
-Allows user to get the main.js file
- */
-router.get("/main.js",(req,res,next)=>{
-    res.sendFile("/javascripts/main.js", {root:"./public"}, (err)=>{
-        console.log(err);
-    });
-})
-/*
 Allows users to sign out
  */
 router.post("/logout", (req,res,next)=>{
