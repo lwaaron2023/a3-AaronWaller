@@ -33,7 +33,7 @@ app.use(passport.session('session'));
 //Sets the app to be able to get css files
 app.get('/public/stylesheets/:filename', (req, res) => {
     const filename = req.params['filename'];
-    res.sendFile(filename, {root: './public/stylesheets/', contentType: 'text/css'}, (err)=>{
+    res.sendFile(filename, {root: path.join(__dirname+'/public/stylesheets/'), contentType: 'text/css'}, (err)=>{
         if(err){
             console.log(err);
             res.status(404).send('Not Found');
@@ -44,7 +44,7 @@ app.get('/public/stylesheets/:filename', (req, res) => {
 app.all('/public/javascripts/:filename', (req, res) => {
     // console.log(req.params['filename'])
     const filename = req.params['filename'];
-    res.sendFile(filename, {root: './public/javascripts/', contentType: 'application/javascript'}, (err)=>{
+    res.sendFile(filename, {root: path.join(__dirname+'/public/javascripts/'), contentType: 'application/javascript'}, (err)=>{
         if(err){
             console.log(err);
             res.status(404).send('Not Found');
