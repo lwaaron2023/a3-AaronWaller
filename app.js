@@ -5,6 +5,7 @@ const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const MongoClient = require("mongodb").MongoClient;
 const ServerApiVersion = require("mongodb").ServerApiVersion;
+const port = process.env.PORT || 3000;
 
 const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
     serverApi: {
@@ -41,9 +42,10 @@ app.use('/order', orderRotuer);
 app.use('/', loginRotuer);
 
 
-
-module.exports = {app};
-
+//Sets up server to listen on specified port
+app.listen(port, (err) => {
+    if (err) console.log(err);
+})
 
 
 

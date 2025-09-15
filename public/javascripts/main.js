@@ -3,7 +3,6 @@ const submit = async function( event ) {
     // a new .html page for displaying results...
     // this was the original browser behavior and still
     // remains to this day
-    event.preventDefault()
     //retrieves the elements of the form
     const firstName = document.getElementById( "firstName" )
     const lastName = document.getElementById( "lastName" )
@@ -64,7 +63,8 @@ const submit = async function( event ) {
             },
             body: body
         }).then( (response) =>
-        {console.log(response)});
+        {console.log(response)
+       });
     }
     else{
         console.log("Error: failed to fetch form elements")
