@@ -70,10 +70,10 @@ Allows a client to place an order
 router.post('/place', async (req, res) => {
     try{
         await addDocument(req.user.username,req.body);
-        res.redirect("/main.html");
+        res.redirect("/main");
     }catch(err){
         console.log(err);
-        res.redirect(500, "/main.html")
+        res.redirect(500, "/main")
     }
 })
 //Finds a specified user in the database

@@ -20,12 +20,12 @@ const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.P
 
 router.post("/login/password", passport.authenticate("local", {
     failureRedirect: "/",
-    successRedirect: "/main.html",
+    successRedirect: "/main",
 }))
 /*
 Controls access to index.html by making sure requester has session
  */
-router.get("/main.html",(req,res,next)=>{
+router.get("/main",(req,res,next)=>{
     // console.log(`user ${req.user}`);
     if(!req.user) {
         res.render("auth.pug", {title:'Login'});
@@ -50,7 +50,7 @@ router.get("/index.html",(req,res,next)=>{
 /*
 Controls access to order.html by making sure requester has session
  */
-router.get("/order.html",(req,res,next)=>{
+router.get("/order",(req,res,next)=>{
     // console.log(`user ${req.user}`);
     if(!req.user) {
         res.render("auth.pug", {title:'Login'});
