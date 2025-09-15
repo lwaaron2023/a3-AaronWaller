@@ -6,7 +6,7 @@ const MongoStore = require('connect-mongo');
 const MongoClient = require("mongodb").MongoClient;
 const ServerApiVersion = require("mongodb").ServerApiVersion;
 const port = process.env.PORT || 3000;
-
+const path = require("path");
 const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -31,9 +31,8 @@ app.use(passport.initialize());
 app.use(passport.session('session'));
 
 //Sets the app to be able to path from the public
-app.use(express.static('public/images/'));
-app.use(express.static('public/javascripts/'));
-app.use(express.static('public/stylesheets/'));
+app.use(express.static(path.join(__dirname, 'public/images')));
+app.use(express.static(path.join(__dirname, 'public/javascripts')));
 //Allows the program to automatically parse json body
 app.use(express.json())
 
