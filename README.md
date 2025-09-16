@@ -92,7 +92,10 @@ Include a very brief summary of your project here. Images are encouraged, along 
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the local strategy to authenticate users
 - **Tech Achievement 2**: I deployed to vercel instead of render
-- 
+- **Tech Achievement 3**: I got 100% for the lighthouse tests as shown by the image below
+
+![Image of the run](./forGrader/Screenshot%202025-09-16%20174455.png)
+
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative:
