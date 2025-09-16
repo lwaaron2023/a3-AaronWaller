@@ -8,6 +8,14 @@ const ServerApiVersion = require("mongodb").ServerApiVersion;
 const router = express.Router();
 module.exports = router;
 
+router.get("/test1",(req, res) => {
+    res.render("main.pug")
+});
+
+router.get("/test2",(req, res) => {
+    res.render("order.pug")
+})
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.PSS}@${process.env.HST}/?retryWrites=true&w=majority&appName=a3-AaronWaller`, {
     serverApi: {
