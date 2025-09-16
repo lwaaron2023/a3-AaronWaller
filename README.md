@@ -68,19 +68,6 @@ List each tip that you followed and describe what you did to follow it in your s
 - (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. Which element received the most emphasis (contrast) on each page? How did you use proximity to organize the visual information on your page? What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? How did you use alignment to organize information and/or increase contrast for particular elements. Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
 
 
-FAQ
----
-**Q: Am I required modify my A2 submission for this assignment?**
-
-No. If you want to start fresh for A3, you are welcome to do so. The option to start with A2 is simply there as a convenience for you.
-
-**Q: Which CSS framework should I use? How do I use it?**
-
-This is for you to figure out. While we do require Express and MongoDB for this assignment, we do not require a specific CSS framework, so we are not going to be discussing a specific one. You will be responsible for choosing a CSS framework and learning how to use it.
-
-**Q: How do I keep my .env file out of my git repo?**
-
-Create a .gitignore file on your local machine and list your .env file in it. Note that while your .env file should NOT appear in your repo, you will still want to [add it to your Render project](https://render.com/docs/configure-environment-variables) so that your website runs successfully.
 
 **Q: I'm confused about how user accounts work for this assignment.**
 
@@ -96,9 +83,7 @@ Note that implementing some of the technical achievements may override this requ
 
 Your version of Node may be outdated. Check out [this link](https://stackoverflow.com/questions/77749884/session-options-session-syntaxerror-unexpected-token-mongoose-give-a) for more information.
 
-**Q: Do I have to handle multiple user accounts?**
 
-No. You only need one dummy account UNLESS you are doing the GitHub login technical achievement. Make sure you mention in your README how the user should log in!
 
 **Q: If we use OAuth for logging in, do we still need the same pattern of behavior from the website when logging in (as described above)?**
 
@@ -132,12 +117,23 @@ Include a very brief summary of your project here. Images are encouraged, along 
 - a list of Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function, please add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the local strategy
+- **Tech Achievement 1**: I used OAuth authentication via the local strategy to authenticate users
 - **Tech Achievement 2**: I deployed to vercel instead of render
 - 
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative:
+  1. Associate a label with every form control: used throughout the entire document, all form elements have a label or in a special case a default value (for the enter one's own option in the radio buttons).
+  2. Don't use color alone to convey information: used on the login in screen when a field is missing, there is a pop up that reminds the user to input text.
+  3. Provide sufficient contrast between foreground and background: used throughout the document because the text is always black and the background is a light color. Additionally the hover are also set to be in between the background light color and the black used for the text so it provides contrast towards both.
+  4.
+  5.
+  6.
+  7.
+  8.
+  9.
+  10.
+  11.
+  12.
 
 
-***TO RUN: use command node --env-file=.env server.js***

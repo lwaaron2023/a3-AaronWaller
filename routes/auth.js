@@ -19,8 +19,9 @@ const client = new MongoClient(`mongodb+srv://${process.env.USR}:${process.env.P
 
 
 router.post("/login/password", passport.authenticate("local", {
-    failureRedirect: "/",
+    failureRedirect: "/failure",
     successRedirect: "/main",
+    failureMessage: true
 }))
 /*
 Controls access to index.html by making sure requester has session
@@ -34,6 +35,14 @@ router.get("/main",(req,res,next)=>{
         res.render("main.pug", {title:'Gompei Gear'})
     }
 })
+
+/*
+Sets the get for the index.html to point to the login screen
+ */
+router.get("/failure",(req,res,next)=>{
+    res.render("auth.pug", {message:'Login failed, incorrect username or password'})
+})
+
 
 /*
 Sets the get for the index.html to point to the login screen
@@ -66,9 +75,55 @@ router.post("/logout", (req,res,next)=>{
     console.log("user logged out");
     req.logout(function(err){
         if(err) return next(err);
-        res.redirect("/");
+        res.render("auth.pug", {message:'Log out successful'});
     });
 })
+/*
+Allows user to create account
+ */
+router.post('/signup', async function(req, res, next) {
+    const alreadyExists = await findUser(req.body.username)
+    const hash = crypto.createHash("md5", process.env.SALT).update(req.body.password).digest("hex");
+    // console.log(alreadyExists);
+    if(!alreadyExists){
+        try{
+            if(!await createUser(req.body.username,hash)['insertId']){
+                console.log("created new user")
+                res.render("auth.pug", {message:'Successfully created new user'});
+            }
+            else{
+                console.log("failed to create new user")
+                res.render("auth.pug", {message:'Failed to create new user due to server error'});
+            }
+        } catch (err){
+            console.log(err)
+            res.render("auth.pug", {message:'Failed to create new user due to server error'});
+        }
+    }
+    else{
+        console.log(`account already exists ${req.body.username}`);
+        res.render("auth.pug", {message:'Account already exists'});
+    }
+    // crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+    //     if (err) { return next(err); }
+    //     db.run('INSERT INTO users (username, hashed_password, salt) VALUES (?, ?, ?)', [
+    //         req.body.username,
+    //         hashedPassword,
+    //         salt
+    //     ], function(err) {
+    //         if (err) { return next(err); }
+    //         var user = {
+    //             id: this.lastID,
+    //             username: req.body.username
+    //         };
+    //         req.login(user, function(err) {
+    //             if (err) { return next(err); }
+    //             res.redirect('/');
+    //         });
+    //     });
+    // });
+});
+
 /*
 Sets up the passport for the steps after it receives and deciphers the data
  */
@@ -95,6 +150,22 @@ const findUser = async (username) => {
         const query = { username: `${username}` };
         // console.log(query);
         return await collection.findOne(query);
+    } catch (err){
+        console.log(err);
+    }
+}
+/*
+Attempts to add user to database
+ */
+const createUser = async (username, password) => {
+    try {
+        const collection = await client.db("a3-AaronWaller").collection("login");
+        // console.log(collection);
+        const query = { username: `${username}`,
+        hashed_password: `${password}` };
+        // console.log(query);
+
+        return await collection.insertOne(query);
     } catch (err){
         console.log(err);
     }
