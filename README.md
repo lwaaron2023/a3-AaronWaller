@@ -5,6 +5,7 @@ https://a3-aaron-waller.vercel.app/
 ***NOTE: For the dummy account to get in (unless a new account is to be created, no spaces in the actual username/password):***
 
 ***username: test***
+
 ***password: test***
 
 The goal of this application is to create a web application that allows for users to create an account, place orders, and view/modify their orders. This application would allow for the fictional Gompei's Gear to be able to have a way for its customers to be able to place and modify the orders that would be filed by the company. I would say the most challenging aspect
