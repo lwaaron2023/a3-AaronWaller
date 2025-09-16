@@ -4,7 +4,7 @@ https://a3-aaron-waller.vercel.app/
 
 ***NOTE: For the dummy account to get in (unless a new account is to be created, no spaces in the actual username/password):
 username: test
-password: test ***
+password: test***
 
 The goal of this application is to create a web application that allows for users to create an account, place orders, and view/modify their orders. This application would allow for the fictional Gompei's Gear to be able to have a way for its customers to be able to place and modify the orders that would be filed by the company. I would say the most challenging aspect
 of the development of this web application would be the integration of auth0 into the application as the complexities as well as the design choice, and insufficient documentation made it challenging to troubleshoot issues. Additionally, the requirements for the application to work with auth0 on a hosting site made frequent refactoring of code necessary. I chose the auth0 local passport strategy to handle authentication because it was the most straightforward to implement as well as needing the least amount of connections to other APIs. I used the tailwind css framework to style the application because I have used this framework previously. Additionally, I like the intuitive manner in which the framework and lain out the extensive documentation. I used the following express middleware packages:
