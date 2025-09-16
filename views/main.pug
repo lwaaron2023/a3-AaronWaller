@@ -1,77 +1,78 @@
-doctype html
-head
-    title Gompei's Gear Order Form
-    meta(charset='utf-8', name='viewport', content='width=device.width, initial-scale=1' lang='en')
-    meta(name='description', content='The main page and gear form for Gompeis Gear')
-    link(rel='stylesheet' href='/public/stylesheets/tailwind.css' type='text/css')
-    script(src='/public/javascripts/main.js')
-    // get rid of favicon error
-    link(rel='icon' href='data:;base64,iVBORw0KGgo=')
-.container.mx-auto.flex.flex-col.justify-center.items-center.min-h-screen.bg-red-100
-    nav.grid.grid-cols-1.gap-4
-        h1.font-bold.justify-self-center.text-6xl Gompei&apos;s Gear
-        .grid.grid-cols-3.mr-4
-            p.mr-2.border-solid.border-4.rounded-full.p-2.text-center Home
-            a.ml-2.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200' href='/order') Orders
-            form.justify-self-center(action='/logout' method='post')
-                button.pl-7.pr-7.ml-2.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200' type='submit') Log Out
-    .container.mx-auto.flex.flex-col.justify-center.items-center.mt-5
-        form.grid.grid-cols-2.gap-4.border-solid.border-4.p-4
-            h2.col-span-2.justify-self-center.font-bold.text-4xl Merch Form
-            label(for='firstName') First Name:
-            input#firstName.bg-gray-200(type='text' placeholder='Please Enter First Name' value='')
-            label(for='lastName') Last Name:
-            input#lastName.bg-gray-200(type='text' placeholder='Please Enter Last Name' value='')
-            label(for='address') Address:
-            input#address.bg-gray-200(type='text' placeholder='Please Enter Address' value='')
-            label(for='shirts') Number of Shirts:
-            #shirts.flex.flex-col
-                div
-                    input#s1(type='radio' name='numShirts' value='0' checked='checked')
-                    label(for='s1') 0
-                div
-                    input#s2(type='radio' name='numShirts' value='1')
-                    label(for='s2') 1
-                div
-                    input#s3(type='radio' name='numShirts' value='2')
-                    label(for='s3') 2
-                div
-                    input#s4(type='radio' name='numShirts' value='-1')
-                    input#s4t(type='number' min='3' max='100' step='1' value='3')
-                    label(for='j4')
-                    label(for='j4t')
-            label(for='jackets') Number of Jackets:
-            #jackets.flex.flex-col
-                div
-                    input#j1(type='radio' name='numJackets' value='0' checked='checked')
-                    label(for='j1') 0
-                div
-                    input#j2(type='radio' name='numJackets' value='1')
-                    label(for='j2') 1
-                div
-                    input#j3(type='radio' name='numJackets' value='2')
-                    label(for='j3') 2
-                div
-                    input#j4(type='radio' name='numJackets' value='-1')
-                    input#j4t(type='number' min='3' max='100' step='1' value='3')
-                    label(for='j4')
-                    label(for='j4t')
-            // <input class="bg-gray-200" type="number"  placeholder="0" value="0" min = "0" max="1000" step = "1">
-            label(for='hats') Number of Hats:
-            #hats.flex.flex-col
-                div
-                    input#h1(type='radio' name='numHats' value='0' checked='checked')
-                    label(for='h1') 0
-                div
-                    input#h2(type='radio' name='numHats' value='1')
-                    label(for='h2') 1
-                div
-                    input#h3(type='radio' name='numHats' value='2')
-                    label(for='h3') 2
-                div
-                    input#h4(type='radio' name='numHats' value='-1')
-                    input#h4t(type='number' min='3' max='100' step='1' value='3')
-                    label(for='h4')
-                    label(for='h4t')
-            button#submit.col-span-2.bg-gray-200 submit
-        p(id='response message')
+doctype
+html(lang="en")
+    head
+        title Gompei's Gear Order Form
+        meta(charset='utf-8', name='viewport', content='width=device.width, initial-scale=1' lang='en')
+        meta(name='description', content='The main page and gear form for Gompeis Gear')
+        link(rel='stylesheet' href='/public/stylesheets/tailwind.css' type='text/css')
+        script(src='/public/javascripts/main.js')
+        // get rid of favicon error
+        link(rel='icon' href='data:;base64,iVBORw0KGgo=')
+    .container.mx-auto.flex.flex-col.justify-center.items-center.min-h-screen.bg-red-100
+        nav.grid.grid-cols-1.gap-4
+            h1.font-bold.justify-self-center.text-6xl Gompei&apos;s Gear
+            .grid.grid-cols-3.mr-4
+                p.mr-2.border-solid.border-4.rounded-full.p-2.text-center Home
+                a.ml-2.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200' href='/order') Orders
+                form.justify-self-center(action='/logout' method='post')
+                    button.pl-7.pr-7.ml-2.border-solid.border-4.rounded-full.p-2.text-center(class='hover:bg-gray-200' type='submit') Log Out
+        .container.mx-auto.flex.flex-col.justify-center.items-center.mt-5
+            form.grid.grid-cols-2.gap-4.border-solid.border-4.p-4
+                h2.col-span-2.justify-self-center.font-bold.text-4xl Merch Form
+                label(for='firstName') First Name:
+                input#firstName.bg-gray-200(type='text' placeholder='Please Enter First Name' value='')
+                label(for='lastName') Last Name:
+                input#lastName.bg-gray-200(type='text' placeholder='Please Enter Last Name' value='')
+                label(for='address') Address:
+                input#address.bg-gray-200(type='text' placeholder='Please Enter Address' value='')
+                label(for='shirts') Number of Shirts:
+                #shirts.flex.flex-col
+                    div
+                        input#s1(type='radio' name='numShirts' value='0' checked='checked')
+                        label(for='s1') 0
+                    div
+                        input#s2(type='radio' name='numShirts' value='1')
+                        label(for='s2') 1
+                    div
+                        input#s3(type='radio' name='numShirts' value='2')
+                        label(for='s3') 2
+                    div
+                        input#s4(type='radio' name='numShirts' value='-1')
+                        input#s4t(type='number' min='3' max='100' step='1' value='3')
+                        label(for='j4')
+                        label(for='j4t')
+                label(for='jackets') Number of Jackets:
+                #jackets.flex.flex-col
+                    div
+                        input#j1(type='radio' name='numJackets' value='0' checked='checked')
+                        label(for='j1') 0
+                    div
+                        input#j2(type='radio' name='numJackets' value='1')
+                        label(for='j2') 1
+                    div
+                        input#j3(type='radio' name='numJackets' value='2')
+                        label(for='j3') 2
+                    div
+                        input#j4(type='radio' name='numJackets' value='-1')
+                        input#j4t(type='number' min='3' max='100' step='1' value='3')
+                        label(for='j4')
+                        label(for='j4t')
+                // <input class="bg-gray-200" type="number"  placeholder="0" value="0" min = "0" max="1000" step = "1">
+                label(for='hats') Number of Hats:
+                #hats.flex.flex-col
+                    div
+                        input#h1(type='radio' name='numHats' value='0' checked='checked')
+                        label(for='h1') 0
+                    div
+                        input#h2(type='radio' name='numHats' value='1')
+                        label(for='h2') 1
+                    div
+                        input#h3(type='radio' name='numHats' value='2')
+                        label(for='h3') 2
+                    div
+                        input#h4(type='radio' name='numHats' value='-1')
+                        input#h4t(type='number' min='3' max='100' step='1' value='3')
+                        label(for='h4')
+                        label(for='h4t')
+                button#submit.col-span-2.bg-gray-200 submit
+            p(id='response message')
