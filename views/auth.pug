@@ -5,11 +5,10 @@ html(lang="en")
         meta(name='description', content='A log in screen for Gompeis Gear')
         title Gompei's Gear Login
         link(href='/public/stylesheets/tailwind.css' rel='stylesheet' type='text/css')
-
+        script(src='/public/javascripts/auth.js')
         // get rid of favicon error
         link(rel='icon' href='data:;base64,iVBORw0KGgo=')
     .container.mx-auto.flex.flex-col.justify-center.items-center.min-h-screen.bg-red-100
-        script(src='/public/javascripts/auth.js')
         div#login
             form.grid.grid-cols-2.gap-6(action='/login/password' method='post')
                 h1.text-xl.font-bold.col-span-2.justify-self-center You Must Log in to Continue

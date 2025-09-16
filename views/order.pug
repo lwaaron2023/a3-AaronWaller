@@ -5,10 +5,10 @@ html(lang="en")
         meta(charset='utf-8', name='viewport', content='width=device.width, initial-scale=1' lang='en')
         meta(name='description', content='A screen to view past orders made on Gompeis Gear')
         link(rel='stylesheet' href='/public/stylesheets/tailwind.css' type='text/css')
+        script(src='/public/javascripts/order.js')
         // get rid of favicon error
         link(rel='icon' href='data:;base64,iVBORw0KGgo=')
     .container.mx-auto.flex.flex-col.justify-center.items-center.min-h-screen.bg-red-100
-        script(src='/public/javascripts/order.js')
         nav.grid.grid-cols-1.gap-4
             h1.font-bold.justify-self-center.text-6xl Current Orders
             .grid.grid-cols-3.mr-4
